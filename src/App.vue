@@ -169,30 +169,4 @@ button:active {
   }
 }
 
-.para-enter-from {
-  /* opacity: 0;
-  transform: translateY(-30px); */
-}
-.para-enter-active {
-  animation: slide-scale 2s ease-out;
-}
-
-.para-enter-to {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-
-.para-leave-from {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-
-.para-leave-active {
-  animation: slide-scale 3s ease-out;
-}
-
-.para-leave-to {
-  /* opacity: 0;
-  transform: translateY(-30px); */
-}
 </style>
