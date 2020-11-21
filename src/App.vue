@@ -108,31 +108,30 @@ button:active {
 }
 
 .para-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
+  /* opacity: 0;
+  transform: translateY(-30px); */
 }
 .para-enter-active {
-  transition: all 0.3s ease-out;
+  animation: slide-scale 0.3s ease-out
 }
 
 .para-enter-to {
-  opacity: 1;
-  transform: translateY(0);
+  /* opacity: 1;
+  transform: translateY(0); */
 }
 
 .para-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+  /* opacity: 1;
+  transform: translateY(0); */
 }
 
 .para-leave-active {
-    transition: all 0.3s ease-in;
+  animation: slide-scale 0.3s ease-out;
 
 }
 
 .para-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-
+  /* opacity: 0;
+  transform: translateY(-30px); */
 }
 </style>
