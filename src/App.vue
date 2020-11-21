@@ -4,7 +4,9 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <p v-if="paraIsVisible">This is only sometimes visible...</p>
+    <transition>
+      <p v-if="paraIsVisible">This is only sometimes visible...</p>
+    </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
   </div>
   <base-modal @close="hideDialog" v-if="dialogIsVisible">
@@ -103,7 +105,9 @@ button:active {
   100% {
     transform: translateX(-150px) scale(1);
   }
-
-
 }
+
+.v-enter-from
+.v-enter-active
+.v-enter-to
 </style>
