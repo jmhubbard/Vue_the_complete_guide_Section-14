@@ -5,15 +5,17 @@
   </div>
   <div class="container">
     <transition
-      name="para"
+      :css="false"
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter"
       @before-leave="beforeLeave"
       @leave="leave"
       @after-leave="afterLeave"
+      @enter-cancelled="enterCancelled"
+      @leave-cancelled="leaveCancelled"
     >
-      <p v-if="paraIsVisible">This is only sometimes visible...</p>
+      <p v-show="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
   </div>
@@ -40,32 +42,65 @@ export default {
       animatedBlock: false,
       paraIsVisible: false,
       usersAreVisible: false,
+      enterInterval: null,
+      leaveInterval: null,
     };
   },
   methods: {
-    afterLeave(el) {
-      console.log('afterLeave');
-      console.log(el); 
+    enterCancelled(el) {
+      console.log(el)
+      console.log('eventcanceled')
+      clearInterval(this.enterInterval);
     },
-    leave(el) {
-      console.log('Leave');
+    leaveCancelled(el) {
+      console.log(el)
+      console.log('leavecanceled')
+      clearInterval(this.leaveInterval);
+    },
+    beforeEnter(el) {
+      console.log('beforeEnter');
       console.log(el);
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      console.log('enter');
+      console.log(el);
+      let round = 1;
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round++;
+        if (round > 100) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      },20);
     },
     afterEnter(el) {
       console.log('afterEnter');
       console.log(el);
     },
-    enter(el) {
-      console.log('enter');
-      console.log(el);
-    },
     beforeLeave(el) {
       console.log('beforeLeave');
       console.log(el);
+      el.style.opacity = 1;
     },
-    beforeEnter(el) {
-      console.log('beforeEnter');
+    leave(el, done) {
+      console.log('Leave');
       console.log(el);
+      let round = 1;
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.01;
+        round++;
+        if (round > 100) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      },20);
+
+    },
+    afterLeave(el) {
+      console.log('afterLeave');
+      console.log(el); 
     },
     showUsers() {
       this.usersAreVisible = true;
