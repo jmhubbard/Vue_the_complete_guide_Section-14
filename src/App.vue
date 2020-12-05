@@ -1,37 +1,9 @@
 <template>
-  <div class="container">
-    <div class="block" :class="{ animate: animatedBlock }"></div>
-    <button @click="animateBlock">Animate</button>
-  </div>
-  <div class="container">
-    <transition
-      :css="false"
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @after-enter="afterEnter"
-      @before-leave="beforeLeave"
-      @leave="leave"
-      @after-leave="afterLeave"
-      @enter-cancelled="enterCancelled"
-      @leave-cancelled="leaveCancelled"
-    >
-      <p v-show="paraIsVisible">This is only sometimes visible...</p>
-    </transition>
-    <button @click="toggleParagraph">Toggle Paragraph</button>
-  </div>
-  <div class="container">
+  <router-view v-slot="slotProps">
     <transition name="fade-button" mode="out-in">
-      <button @click="showUsers" v-if="!usersAreVisible">Show Users</button>
-      <button @click="hideUsers" v-else>Hide Users</button>
+      <component :is="slotProps.Component"></component>
     </transition>
-  </div>
-  <base-modal @close="hideDialog" :open="dialogIsVisible">
-    <p>This is a test dialog!</p>
-    <button @click="hideDialog">Close it!</button>
-  </base-modal>
-  <div class="container">
-    <button @click="showDialog">Show Dialog</button>
-  </div>
+  </router-view>
 </template>  
 
 <script>
@@ -48,13 +20,13 @@ export default {
   },
   methods: {
     enterCancelled(el) {
-      console.log(el)
-      console.log('eventcanceled')
+      console.log(el);
+      console.log('eventcanceled');
       clearInterval(this.enterInterval);
     },
     leaveCancelled(el) {
-      console.log(el)
-      console.log('leavecanceled')
+      console.log(el);
+      console.log('leavecanceled');
       clearInterval(this.leaveInterval);
     },
     beforeEnter(el) {
@@ -73,7 +45,7 @@ export default {
           clearInterval(this.enterInterval);
           done();
         }
-      },20);
+      }, 20);
     },
     afterEnter(el) {
       console.log('afterEnter');
@@ -95,12 +67,11 @@ export default {
           clearInterval(this.leaveInterval);
           done();
         }
-      },20);
-
+      }, 20);
     },
     afterLeave(el) {
       console.log('afterLeave');
-      console.log(el); 
+      console.log(el);
     },
     showUsers() {
       this.usersAreVisible = true;
@@ -204,4 +175,15 @@ button:active {
   }
 }
 
+.route-enter-from {
+}
+.route-enter-active {
+  animation: slide-scale 0.4s ease-out;
+}
+.route-enter-to {
+}
+
+.route-leave-active {
+  animation: slide-scale 0.4s ease-in;
+}
 </style>
